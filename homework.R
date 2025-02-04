@@ -17,7 +17,10 @@ ds <- read_csv("rolling_stone_500.csv")
 
 #ANSWER
 glimpse(ds)
-ds$Year <- as.numeric(ds$Year)
+ds <- ds %>% 
+  mutate(Year = ifelse(nchar(Year)==4, 
+         as.numeric(Year), 
+         as.numeric(substr(Year,start=2, stop=5))))
 typeof(ds$Year)
 
 ### Question 2 ---------- 
@@ -115,7 +118,6 @@ ds_filter <- ds %>%
 
 ds_filter
 
-
 ### Question 9 ---------
 
 # Use group_by and summarize to find the average rank and 
@@ -131,7 +133,6 @@ ds %>%
   summarize(avg_rank = mean(rank, na.rm = TRUE),  
   num_songs = n())
 
-
 ### Question 10 --------
 
 # Look up the dplyr "count" function
@@ -144,7 +145,3 @@ ds %>%
   filter(!is.na(decade)) %>%   
   count(decade) %>%       
   slice_max(n, n = 1) 
-slice_max(n, n = 1)
-
-
-  
