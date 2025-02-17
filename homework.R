@@ -1,5 +1,5 @@
 #PSYC 259 Homework 2 - Data Transformation
-#For full credit, provide answers for at least 7/10
+#For full credit, provide answers for at least 7/10 (10/10)
 
 #List names of students collaborating with: Hanzhi Wang
 
@@ -22,6 +22,9 @@ ds <- ds %>%
          as.numeric(Year), 
          as.numeric(substr(Year,start=2, stop=5))))
 typeof(ds$Year)
+
+#Mcomment: an easier option is using as.numeric (though it does create NAs)
+ds <- ds %>% mutate(Year = as.numeric(Year)) #Another option
 
 ### Question 2 ---------- 
 
@@ -89,6 +92,15 @@ ds_filter <- ds %>%
   filter(year %in% c(ds_sum$earliest_year, ds_sum$most_recent_year, round(ds_sum$average_year))) %>%
   arrange(year)
 ds_filter
+
+#Mcomment: Looks good! You can also use %in% dataframe or the OR command
+ds_filter <- ds %>%
+  filter(year %in% ds_sum) %>%
+  arrange(year)
+
+ds %>% filter(year == round(ds_sum$min_yr) | 
+                year == round(ds_sum$mean_yr) | 
+                year == round(ds_sum$max_yr) ) %>% arrange(year)
 
 ### Question 8 ---------- 
 
